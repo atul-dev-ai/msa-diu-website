@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "MSA DIU | Manikganj Student Association",
   description:
     "The official platform for Manikganj Student Association (MSA) at Daffodil International University. Stay connected, explore events, and unite with our campus community.",
+  verification: {
+    google: "vBOhE-VuhIiXVbQ0jiPyPPH6Cou-K6rHEa0-1a0np0w",
+  },
   keywords: [
     "MSA DIU",
     "Manikganj Student Association",
@@ -29,7 +32,7 @@ export const metadata: Metadata = {
     title: "MSA DIU | Manikganj Student Association",
     description:
       "Official community platform for Manikganj students at DIU. Join us for events, notices, and networking.",
-    url: "https://msa-diu-website.vercel.app", 
+    url: "https://msa-diu-website.vercel.app",
     siteName: "MSA DIU",
     images: [
       {
