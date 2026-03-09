@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "MSA DIU | Manikganj Student Association",
     description:
       "Official community platform for Manikganj students at DIU. Join us for events, notices, and networking.",
-    url: "https://your-domain.vercel.app", // 👈 পরে Vercel-এ লাইভ করার পর এখানে আসল লিংকটি বসিয়ে দিবেন
+    url: "https://msa-diu-website.vercel.app", 
     siteName: "MSA DIU",
     images: [
       {
