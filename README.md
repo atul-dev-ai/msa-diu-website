@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+  <h1>🎓 Manikganj Student Association (MSA) - DIU</h1>
+  <p><strong>The Official Community Platform for Manikganj Students at Daffodil International University.</strong></p>
 
-First, run the development server:
+  <a href="https://vercel.com/new/clone?repository-url=https://github.com/atul-dev-ai/msa-diu-website">
+    <img src="https://vercel.com/button" alt="Deploy with Vercel"/>
+  </a>
+  <br />
+
+  <a href="https://msa-diu-website.vercel.app">
+    <img src="https://img.shields.io/badge/Live_Website-Visit_Now-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+
+  <br />
+  <br />
+
+  ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white)
+  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+  ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+  ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white)
+
+</div>
+
+---
+
+## 🚀 About The Project
+
+This is the official website for the **Manikganj Student Association (MSA)** at Daffodil International University (DIU). It serves as a central hub for students to stay connected, get latest updates, explore upcoming events, and access official notices seamlessly.
+
+Built with modern web technologies, this platform ensures a lightning-fast, SEO-optimized, and highly interactive user experience.
+
+### ✨ Key Features
+
+- **📢 Dynamic Notice Board:** Real-time official updates with animated modals and Google Form integrations.
+- **📅 Events Management:** Keep track of upcoming programs, get-togethers, and cultural events.
+- **👥 Committee Profiles:** Information about the current executive committee members.
+- **📱 Fully Responsive:** Beautiful glassmorphism UI optimized for both desktop and mobile devices.
+- **⚡ SEO Optimized:** Perfect Lighthouse scores with dynamic Open Graph tags, canonical links, and Schema markup.
+
+---
+
+## 🛠️ Built With
+
+* **Frontend:** Next.js (App Router), React, Tailwind CSS
+* **UI Libraries:** Ant Design (Modal/Icons), Framer Motion (Animations)
+* **Backend & Database:** Supabase (PostgreSQL)
+* **Email Service:** Resend API
+* **Deployment:** Vercel
+
+---
+
+## 💻 Getting Started (Local Setup)
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+Make sure you have Node.js installed on your machine.
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+## Installation
+`. Clone the repository
+
+```bash
+git clone https://github.com/atul-dev-ai/msa-diu-website.git
+```
+
+1. Navigate to the project directory
+
+```bash
+cd msa-diu-website
+```
+
+3. Install NPM packages
+
+```bash
+npm install
+```
+
+4. Setup Environment Variables
+> Create a `.env.local` file in the root directory and add your API keys:
+
+```Code snippet
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+RESEND_API_KEY=your_resend_api_key
+```
+
+5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+6. Open `http://localhost:3000` in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 👨‍💻 Author
+Atul Paul
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+GitHub: @atul-dev-ai
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Project Link: https://msa-diu-website.vercel.app
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<div align="center">
+<i>Developed with ❤️ for the MSA DIU Community</i>
+</div>
