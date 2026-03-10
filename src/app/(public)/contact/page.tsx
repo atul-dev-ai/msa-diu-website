@@ -15,6 +15,18 @@ import {
 } from "@ant-design/icons";
 import { supabase } from "@/lib/supabase";
 
+import type { Metadata } from "next";
+
+// 🔹 Unique SEO Metadata for Contact Page 🔹
+export const metadata: Metadata = {
+  title: "Contact Us | MSA DIU - Get in Touch",
+  description:
+    "Reach out to the Manikganj Student Association at DIU. Find our contact info, location, and connect with the MSA executive committee.",
+  alternates: {
+    canonical: "https://msa-diu-website.vercel.app/contact",
+  },
+};
+
 const { TextArea } = Input;
 
 export default function ContactAdmin() {

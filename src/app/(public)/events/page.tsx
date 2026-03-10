@@ -15,6 +15,18 @@ import { Tag, Spin } from "antd";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 
+import type { Metadata } from "next";
+
+// 🔹 Unique SEO Metadata for Events Page 🔹
+export const metadata: Metadata = {
+  title: "Upcoming Events & Programs | MSA DIU",
+  description:
+    "Stay updated with the latest events, get-togethers, and official programs of the Manikganj Student Association at DIU.",
+  alternates: {
+    canonical: "https://msa-diu-website.vercel.app/events",
+  },
+};
+
 interface EventType {
   id: number;
   title: string;

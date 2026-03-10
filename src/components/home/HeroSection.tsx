@@ -8,8 +8,13 @@ import {
   ArrowRightOutlined,
   NotificationOutlined,
   ClockCircleOutlined,
+  CalendarOutlined,
+  FormOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
+import { Modal } from "antd";
 import { supabase } from "@/lib/supabase";
+import dayjs from "dayjs";
 
 interface NoticeType {
   id: string | number;
@@ -23,6 +28,9 @@ interface NoticeType {
 const HeroSection = () => {
   const [isClient, setIsClient] = useState(false);
   const [featuredNotice, setFeaturedNotice] = useState<NoticeType | null>(null);
+
+  // 🔹 Modal State 🔹
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -162,23 +170,109 @@ const HeroSection = () => {
                     {featuredNotice.description}
                   </p>
 
-                  <Link
-                    href={
-                      featuredNotice.link !== "#"
-                        ? featuredNotice.link
-                        : "#events"
-                    }
+                  {/* 🔹 View Details Button Updated to trigger Modal 🔹 */}
+                  <button
+                    onClick={() => setIsModalVisible(true)}
+                    className="w-full py-3.5 rounded-xl bg-white text-indigo-900 font-bold hover:bg-indigo-50 transition-all shadow-lg flex items-center justify-center gap-2 group-hover:gap-4 duration-300 cursor-pointer hover:-translate-y-1.5 hover:scale-105"
                   >
-                    <button className="w-full py-3.5 rounded-xl bg-white text-indigo-900 font-bold hover:bg-indigo-50 transition-all shadow-lg flex items-center justify-center gap-2 group-hover:gap-4 duration-300 cursor-pointer hover:-translate-y-1.5 hover:scale-105">
-                      View Details <ArrowRightOutlined />
-                    </button>
-                  </Link>
+                    View Details <ArrowRightOutlined />
+                  </button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
+
+      {/* 🔹 Beautiful Modal for Notice Details & Form Link 🔹 */}
+      <Modal
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+        closeIcon={
+          <motion.div
+            whileHover={{ rotate: 90, scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/40 hover:bg-slate-900/60 border border-white/30 shadow-md backdrop-blur-sm -translate-x-1.5 translate-y-1.5 transition-colors duration-300"
+          >
+            <CloseOutlined className="text-white text-base" />
+          </motion.div>
+        }
+        centered
+        width={600}
+        className="notice-modal"
+        styles={
+          {
+            content: { padding: 0, borderRadius: "1.5rem", overflow: "hidden" },
+            mask: {
+              backdropFilter: "blur(8px)",
+              backgroundColor: "rgba(15, 23, 42, 0.6)",
+            },
+          } as any
+        }
+      >
+        {featuredNotice && (
+          <div>
+            {/* Modal Header Area */}
+            <div className="bg-gradient-to-r from-indigo-600 to-cyan-600 p-8 text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+
+              <div className="flex items-center gap-3 mb-4 relative z-10">
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/20 backdrop-blur-md border border-white/30`}
+                >
+                  {featuredNotice.type}
+                </span>
+                <span className="text-sm font-medium flex items-center gap-1.5 opacity-90">
+                  <CalendarOutlined /> Program Date:{" "}
+                  {dayjs(featuredNotice.expirydate).format("DD MMMM, YYYY")}
+                </span>
+              </div>
+
+              <h2 className="text-2xl md:text-3xl font-extrabold leading-tight relative z-10 drop-shadow-md">
+                {featuredNotice.title}
+              </h2>
+            </div>
+
+            {/* Modal Body Area */}
+            <div className="p-8 bg-white">
+              <h4 className="text-slate-800 font-bold text-lg mb-3">
+                Notice Details
+              </h4>
+              <p className="text-slate-600 leading-relaxed whitespace-pre-wrap text-[15px] mb-8">
+                {featuredNotice.description}
+              </p>
+
+              {/* Action Button for Google Form / Registration */}
+              {featuredNotice.link && featuredNotice.link !== "#" ? (
+                <div className="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 text-center">
+                  <p className="text-sm font-semibold text-slate-700 mb-3">
+                    Action required for this event:
+                  </p>
+                  <a
+                    href={featuredNotice.link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <button className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer">
+                      <FormOutlined className="text-lg" />
+                      {featuredNotice.link.includes("forms")
+                        ? "Fill Google Form"
+                        : "Click Here to Register / View"}
+                    </button>
+                  </a>
+                </div>
+              ) : (
+                <div className="text-center pt-4 border-t border-slate-100">
+                  <p className="text-xs text-slate-400">
+                    No additional links provided for this notice.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </Modal>
     </section>
   );
 };

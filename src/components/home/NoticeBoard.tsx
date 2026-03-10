@@ -82,7 +82,8 @@ const NoticeBoard = () => {
               viewport={{ once: true }}
               className="inline-flex animate-bounce items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 text-indigo-600 font-bold text-sm mb-5 shadow-sm"
             >
-              <NotificationOutlined className="text-lg animate-pulse [animation-delay:0.5s]" /> Official Updates
+              <NotificationOutlined className="text-lg animate-pulse [animation-delay:0.5s]" />{" "}
+              Official Updates
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
               Notice{" "}
@@ -207,18 +208,28 @@ const NoticeBoard = () => {
         onCancel={() => setIsModalVisible(false)}
         footer={null}
         closeIcon={
-          <CloseOutlined className="text-slate-400 hover:text-red-500 transition-colors text-lg" />
+          <motion.div
+            // হোভারে ঘূর্ণন এবং স্কেল অ্যানিমেশন
+            whileHover={{ rotate: 90, scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            // স্টাইলিং: বৃত্তাকার, গ্লাসমরফিক এফেক্ট, এবং পজিশনিং টুইক
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 border border-white/30 shadow-md backdrop-blur-sm -translate-x-1.5 translate-y-1.5 transition-colors duration-300"
+          >
+            <CloseOutlined className="text-white text-base" />
+          </motion.div>
         }
         centered
         width={600}
         className="notice-modal"
-        styles={{
-          content: { padding: 0, borderRadius: "1.5rem", overflow: "hidden" },
-          mask: {
-            backdropFilter: "blur(8px)",
-            backgroundColor: "rgba(15, 23, 42, 0.6)",
-          },
-        }as any}
+        styles={
+          {
+            content: { padding: 0, borderRadius: "1.5rem", overflow: "hidden" },
+            mask: {
+              backdropFilter: "blur(8px)",
+              backgroundColor: "rgba(15, 23, 42, 0.6)",
+            },
+          } as any
+        }
       >
         {selectedNotice && (
           <div>
