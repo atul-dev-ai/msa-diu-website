@@ -14,7 +14,7 @@ import {
   UserOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { message, Spin, Dropdown } from "antd"; // 🔹 Dropdown ইম্পোর্ট করা হলো
+import { message, Spin, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { supabase } from "@/lib/supabase";
 
@@ -28,7 +28,6 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Security Check
   useEffect(() => {
     const checkAuth = async () => {
       const {
@@ -47,14 +46,12 @@ export default function DashboardLayout({
     checkAuth();
   }, [router]);
 
-  // Logout Function
   const handleLogout = async () => {
     await supabase.auth.signOut();
     message.success("Logged out successfully!");
     router.push("/admin/login");
   };
 
-  // 🔹 Profile Dropdown Menu Items 🔹
   const userMenuItems: MenuProps["items"] = [
     {
       key: "logout",
@@ -106,7 +103,6 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
-      {/* Sidebar */}
       <aside
         className={`bg-white border-r border-slate-200 transition-all duration-300 flex flex-col ${collapsed ? "w-20" : "w-64"} z-20`}
       >
@@ -140,7 +136,6 @@ export default function DashboardLayout({
           })}
         </nav>
 
-        {/* Sidebar Logout Button */}
         <div className="p-4 border-t border-slate-100 shrink-0">
           <button
             onClick={handleLogout}
@@ -152,9 +147,8 @@ export default function DashboardLayout({
         </div>
       </aside>
 
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Header */}
+
         <header className="h-16 bg-slate-950 flex items-center justify-between px-6 shadow-md z-10 shrink-0">
           <button
             onClick={() => setCollapsed(!collapsed)}
@@ -168,7 +162,6 @@ export default function DashboardLayout({
               Hello, Authorized Admin
             </span>
 
-            {/* 🔹 Top Right Profile Dropdown 🔹 */}
             <Dropdown
               menu={{ items: userMenuItems }}
               placement="bottomRight"
@@ -182,7 +175,6 @@ export default function DashboardLayout({
           </div>
         </header>
 
-        {/* Dynamic Page Content */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-slate-50/50 relative">
           <div className="max-w-7xl mx-auto pb-10">{children}</div>
         </main>

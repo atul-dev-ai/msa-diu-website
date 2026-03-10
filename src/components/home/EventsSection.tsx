@@ -14,15 +14,13 @@ import {
 import { Tag } from "antd";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
-
-// ডাটাবেসের নতুন ইভেন্ট টাইপ
 interface EventType {
   id: number;
   title: string;
   description: string;
   event_date: string;
   cover_image: string;
-  location?: string; // ডাটাবেসে থাকলে আসবে, না থাকলে ডিফল্ট দেখাবে
+  location?: string; 
 }
 
 const EventsSection = () => {
@@ -30,7 +28,6 @@ const EventsSection = () => {
   const [events, setEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // ডাটাবেস থেকে ইভেন্ট ফেচ করা
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -38,7 +35,7 @@ const EventsSection = () => {
           .from("events")
           .select("*")
           .order("event_date", { ascending: false })
-          .limit(6); // হোম পেজে লেটেস্ট ৬টি ইভেন্ট দেখাবো
+          .limit(6);
 
         if (data) setEvents(data);
       } catch (error) {
@@ -51,7 +48,6 @@ const EventsSection = () => {
     fetchEvents();
   }, []);
 
-  // GSAP Scroll Animation
   useEffect(() => {
     if (events.length === 0) return;
 
@@ -80,7 +76,7 @@ const EventsSection = () => {
   return (
     <section id="events" ref={sectionRef} className="py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -92,7 +88,6 @@ const EventsSection = () => {
             </p>
           </div>
 
-          {/* Desktop View All Button */}
           {events.length > 0 && (
             <Link href="/events" className="hidden md:flex">
               <button className="flex items-center gap-2 cursor-pointer  font-semibold ransition-colors hover:border py-2 px-5 hover:rounded-full hover:border-purple-300 hover:shadow-purple-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-110 duration-300 transition-all rounded-full">
@@ -106,7 +101,6 @@ const EventsSection = () => {
           )}
         </div>
 
-        {/* Events Grid */}
         {events.length === 0 ? (
           <div className="text-center py-16 bg-slate-50 rounded-3xl border border-slate-100">
             <p className="text-slate-500 font-medium text-lg">
@@ -116,7 +110,6 @@ const EventsSection = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => {
-              // তারিখ অনুযায়ী অটোমেটিক স্ট্যাটাস এবং কালার সেট করা
               const isUpcoming = dayjs(event.event_date).isAfter(dayjs());
               const statusText = isUpcoming ? "Upcoming" : "Completed";
               const tagColor = isUpcoming ? "cyan" : "green";
@@ -128,7 +121,6 @@ const EventsSection = () => {
                   transition={{ duration: 0.3 }}
                   className="event-card bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-shadow flex flex-col"
                 >
-                  {/* Event Cover Image */}
                   <div className="relative h-56 w-full overflow-hidden bg-slate-200 shrink-0">
                     {event.cover_image ? (
                       <Image
@@ -153,7 +145,6 @@ const EventsSection = () => {
                     </div>
                   </div>
 
-                  {/* Event Details */}
                   <div className="p-6 flex flex-col justify-between flex-grow">
                     <div>
                       <div className="flex items-center gap-4 text-sm text-slate-500 mb-3 font-medium">
@@ -175,7 +166,6 @@ const EventsSection = () => {
                       </p>
                     </div>
 
-                    {/* 🔹 View Details & Gallery Button 🔹 */}
                     <Link href={`/events/${event.id}`} className="mt-auto">
                       <motion.button
                         whileTap={{ scale: 0.95 }}
@@ -192,7 +182,6 @@ const EventsSection = () => {
           </div>
         )}
 
-        {/* Mobile View All Button */}
         {events.length > 0 && (
           <div className="mt-10 text-center md:hidden">
             <Link href="/events">

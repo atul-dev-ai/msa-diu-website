@@ -13,17 +13,13 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState("/");
   const pathname = usePathname();
 
-  // 🔹 Bulletproof Scrollspy Logic 🔹
   useEffect(() => {
     const handleScroll = () => {
-      // নেভবার ব্যাকগ্রাউন্ড চেঞ্জ
       setIsScrolled(window.scrollY > 20);
 
       if (pathname === "/") {
         const sections = ["notice", "committee", "events", "about"];
         let currentSection = "/";
-
-        // নেভবারের নিজস্ব হাইটের কারণে একটি অফসেট (Offset) ধরা হলো
         const scrollPosition = window.scrollY + 120;
 
         for (const section of sections) {
@@ -32,7 +28,6 @@ export default function Navbar() {
             const offsetTop = element.offsetTop;
             const offsetHeight = element.offsetHeight;
 
-            // যদি বর্তমান স্ক্রল পজিশন এই সেকশনের ঠিক ভেতরে থাকে
             if (
               scrollPosition >= offsetTop &&
               scrollPosition < offsetTop + offsetHeight
@@ -42,19 +37,15 @@ export default function Navbar() {
           }
         }
 
-        // একদম উপরে থাকলে নিশ্চিতভাবে Home সিলেক্ট হবে
         if (window.scrollY < 100) {
           currentSection = "/";
         }
-
-        // স্টেট আপডেট করা হচ্ছে
         setActiveLink(currentSection);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // পেজ রিলোড হলে বা প্রথমবার লোড হলে একবার চেক করবে
     setTimeout(() => {
       handleScroll();
     }, 100);
@@ -62,7 +53,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
-  // URL পাথ চেঞ্জ হলে (অন্য পেজে গেলে) অ্যাক্টিভ লিংক আপডেট হবে
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (pathname.startsWith("/events") && pathname !== "/events") {
@@ -92,7 +82,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+
             <Link
               href="/"
               className="flex items-center gap-3 group z-50"
@@ -116,7 +106,6 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-1 bg-white/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-slate-200/50 shadow-sm">
               {navLinks.map((link) => {
                 const isActive = activeLink === link.path;
@@ -141,7 +130,6 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* Desktop Contact Admin Button */}
             <div className="hidden md:block">
               <Link href="/contact" onClick={() => setActiveLink("/contact")}>
                 <button className="bg-gradient-to-tr from-emerald-200 to-slate-400 hover:from-emerald-300 hover:to-slate-500 cursor-pointer text-black px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-sm hover:shadow-indigo-500/30 hover:-translate-y-0.5 hover:scale-105">
@@ -150,7 +138,6 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Menu Toggle Button */}
             <button
               className="md:hidden z-50 w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-700 shadow-sm border border-slate-100 cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
@@ -161,7 +148,6 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

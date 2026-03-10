@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/admin/", // 👈 অ্যাডমিন প্যানেল গুগলে ইনডেক্স হবে না (সিকিউরিটি)
+      disallow: "/admin/",
     },
     sitemap: "https://msa-diu-website.vercel.app/sitemap.xml",
   };

@@ -28,8 +28,6 @@ interface NoticeType {
 const HeroSection = () => {
   const [isClient, setIsClient] = useState(false);
   const [featuredNotice, setFeaturedNotice] = useState<NoticeType | null>(null);
-
-  // 🔹 Modal State 🔹
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
@@ -63,7 +61,6 @@ const HeroSection = () => {
       id="home"
       className="relative w-full min-h-[100dvh] flex items-center pt-28 pb-20 md:pt-32 md:pb-24 overflow-hidden"
     >
-      {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/backbg-2.jpg"
@@ -79,14 +76,12 @@ const HeroSection = () => {
         <div
           className={`flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 ${!featuredNotice ? "justify-center" : ""}`}
         >
-          {/* Left Side: Main Hero Text */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className={`w-full ${featuredNotice ? "lg:w-[55%] xl:w-[50%] text-left" : "w-full max-w-4xl mx-auto text-center"} flex flex-col justify-center space-y-6 md:space-y-8`}
           >
-            {/* Badge */}
             <div
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-indigo-200 font-medium text-xs md:text-sm backdrop-blur-md animate-bounce w-fit ${!featuredNotice ? "mx-auto" : ""}`}
             >
@@ -97,7 +92,6 @@ const HeroSection = () => {
               Official Platform of MSA-DIU
             </div>
 
-            {/* ডাইনামিক ফন্ট সাইজ: নোটিশ থাকলে text-4xl/5xl, না থাকলে text-6xl/7xl */}
             <h1
               className={`font-extrabold text-white leading-[1.2] tracking-tight ${featuredNotice ? "text-4xl sm:text-5xl lg:text-5xl xl:text-5xl" : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl"}`}
             >
@@ -131,7 +125,6 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Right/Bottom Side: Live Dynamic Notice Card */}
           <AnimatePresence>
             {featuredNotice && (
               <motion.div
@@ -170,7 +163,6 @@ const HeroSection = () => {
                     {featuredNotice.description}
                   </p>
 
-                  {/* 🔹 View Details Button Updated to trigger Modal 🔹 */}
                   <button
                     onClick={() => setIsModalVisible(true)}
                     className="w-full py-3.5 rounded-xl bg-white text-indigo-900 font-bold hover:bg-indigo-50 transition-all shadow-lg flex items-center justify-center gap-2 group-hover:gap-4 duration-300 cursor-pointer hover:-translate-y-1.5 hover:scale-105"
@@ -184,7 +176,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* 🔹 Beautiful Modal for Notice Details & Form Link 🔹 */}
       <Modal
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
@@ -213,7 +204,6 @@ const HeroSection = () => {
       >
         {featuredNotice && (
           <div>
-            {/* Modal Header Area */}
             <div className="bg-gradient-to-r from-indigo-600 to-cyan-600 p-8 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
 
@@ -234,7 +224,6 @@ const HeroSection = () => {
               </h2>
             </div>
 
-            {/* Modal Body Area */}
             <div className="p-8 bg-white">
               <h4 className="text-slate-800 font-bold text-lg mb-3">
                 Notice Details
@@ -243,7 +232,6 @@ const HeroSection = () => {
                 {featuredNotice.description}
               </p>
 
-              {/* Action Button for Google Form / Registration */}
               {featuredNotice.link && featuredNotice.link !== "#" ? (
                 <div className="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 text-center">
                   <p className="text-sm font-semibold text-slate-700 mb-3">

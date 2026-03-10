@@ -10,7 +10,6 @@ import {
 } from "@ant-design/icons";
 import { supabase } from "@/lib/supabase";
 
-// ডাটাবেসের মেম্বার টাইপ
 interface CommitteeMember {
   id: number;
   name: string;
@@ -27,14 +26,13 @@ const CommitteeSection = () => {
   const [members, setMembers] = useState<CommitteeMember[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // ডাটাবেস থেকে মেম্বারদের ডেটা আনা (rank অনুযায়ী)
   useEffect(() => {
     const fetchCommittee = async () => {
       try {
         const { data, error } = await supabase
           .from("committee")
           .select("*")
-          .order("rank", { ascending: true }); // Rank 1, 2, 3... হিসেবে আসবে
+          .order("rank", { ascending: true });
 
         if (data) setMembers(data);
       } catch (error) {
@@ -47,19 +45,19 @@ const CommitteeSection = () => {
     fetchCommittee();
   }, []);
 
-  if (loading) return null; // লোডিং অবস্থায় ফাঁকা থাকবে
+  if (loading) return null;
 
   return (
     <section
       id="committee"
       className="py-24 bg-slate-50 relative overflow-hidden border-b border-slate-200"
     >
-      {/* 🔹 Bluish Decorative Background (লগইন পেজের মতো) 🔹 */}
+
       <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -81,7 +79,6 @@ const CommitteeSection = () => {
           </p>
         </div>
 
-        {/* Committee Grid */}
         {members.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm">
             <p className="text-slate-500 font-medium text-lg">
@@ -100,10 +97,9 @@ const CommitteeSection = () => {
                 whileHover={{ y: -10 }}
                 className="bg-white rounded-[2rem] p-6 shadow-xl shadow-indigo-100/40 border border-slate-100 hover:border-indigo-200 transition-all group flex flex-col items-center text-center relative overflow-hidden"
               >
-                {/* Card Top Glow Hover Effect */}
+
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                {/* Profile Image with Gradient Ring */}
                 <div className="relative w-28 h-28 mb-5 rounded-full p-1 bg-gradient-to-tr from-indigo-500 to-cyan-400 shadow-lg shadow-indigo-200">
                   <div className="w-full h-full relative rounded-full overflow-hidden border-4 border-white bg-slate-100">
                     {member.image ? (
@@ -122,7 +118,6 @@ const CommitteeSection = () => {
                   </div>
                 </div>
 
-                {/* Member Details */}
                 <h3 className="text-xl font-bold text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors">
                   {member.name}
                 </h3>
@@ -140,7 +135,6 @@ const CommitteeSection = () => {
                   </div>
                 )}
 
-                {/* Social Links */}
                 <div className="flex gap-3 mt-auto pt-2">
                   {member.facebook && member.facebook !== "#" && (
                     <a

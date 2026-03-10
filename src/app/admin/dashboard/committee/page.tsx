@@ -89,17 +89,16 @@ export default function ManageCommittee() {
     try {
       let finalImageUrl = "";
 
-      // ১. ডিভাইস থেকে আপলোড (HTTP 400 Fix)
       if (imageUploadType === "upload" && uploadFile) {
-        // ফাইলের অরিজিনাল এক্সটেনশন বের করা
+
         const fileExt = uploadFile.name.split(".").pop();
-        // কোনো স্পেস ছাড়া ক্লিন নাম তৈরি করা
+
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
 
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from("committee_images")
           .upload(fileName, uploadFile, {
-            contentType: uploadFile.type, // <-- HTTP 400 এরর ফিক্স!
+            contentType: uploadFile.type, 
             upsert: true,
           });
 
@@ -113,12 +112,11 @@ export default function ManageCommittee() {
 
         finalImageUrl = publicUrlData.publicUrl;
       }
-      // ২. URL অপশন
+
       else if (imageUploadType === "url") {
         finalImageUrl = values.imageUrl || "";
       }
 
-      // ডাটাবেসে ডেটা ইনসার্ট করা
       const { error } = await supabase.from("committee").insert([
         {
           name: values.name,
@@ -402,7 +400,7 @@ export default function ManageCommittee() {
                   maxCount={1}
                   beforeUpload={(file) => {
                     setUploadFile(file);
-                    return false; // Auto upload বন্ধ রাখা হয়েছে
+                    return false; 
                   }}
                   onRemove={() => setUploadFile(null)}
                 >

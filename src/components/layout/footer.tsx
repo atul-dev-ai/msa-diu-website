@@ -16,18 +16,13 @@ import {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  // 🔹 গুগল ফর্ম পপআপের জন্য স্টেট 🔹
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <footer className="bg-slate-950 pt-16 relative overflow-hidden">
-      {/* Background Decorative Element */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Top Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-12 border-b border-slate-800">
-          {/* Column 1: About & Logo */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 relative bg-white rounded-full p-1">
@@ -46,7 +41,7 @@ const Footer = () => {
               Empowering the students of Manikganj at Daffodil International
               University through unity, leadership, and cultural heritage.
             </p>
-            {/* Social Links */}
+
             <div className="flex gap-4">
               <a
                 href="https://www.facebook.com/diumsa/"
@@ -70,7 +65,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
             <h3 className="text-white font-bold mb-6 text-lg">Quick Links</h3>
             <ul className="space-y-3">
@@ -113,7 +107,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Important Links */}
           <div>
             <h3 className="text-white font-bold mb-6 text-lg">Community</h3>
             <ul className="space-y-3">
@@ -134,7 +127,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                {/* 🔹 Become a Member Button 🔹 */}
+              
                 <button
                   onClick={() => setIsModalVisible(true)}
                   className="text-slate-400 hover:text-indigo-400 transition-colors text-sm text-left w-full cursor-pointer"
@@ -153,7 +146,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Contact Info */}
           <div>
             <h3 className="text-white font-bold mb-6 text-lg">Contact Us</h3>
             <ul className="space-y-4">
@@ -178,7 +170,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar & Developer Highlight */}
       <div className="bg-slate-900 py-6 border-t border-slate-800/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
           <p className="text-slate-500 text-sm text-center lg:text-left">
@@ -186,7 +177,6 @@ const Footer = () => {
             reserved.
           </p>
 
-          {/* 🔥 Developer Highlight Section 🔥 */}
           <div className="group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
             <div className="relative flex items-center gap-2 px-5 py-2.5 bg-slate-950 rounded-full border border-slate-800 text-sm font-medium">
@@ -205,7 +195,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* 🔹 Google Form Modal (পপআপ) 🔹 */}
       <Modal
         title={
           <span className="text-xl font-bold text-slate-800">
@@ -220,8 +209,7 @@ const Footer = () => {
         destroyOnClose
       >
         <div className="w-full h-[70vh] min-h-[500px] rounded-xl overflow-hidden mt-4">
-          <iframe
-            // ⚠️ নিচে আপনার আসল Google Form এর লিংকটি বসাবেন ⚠️
+          <iframe 
             src="https://docs.google.com/forms/d/e/1FAIpQLScX_YOUR_FORM_ID_HERE/viewform?embedded=true"
             width="100%"
             height="100%"

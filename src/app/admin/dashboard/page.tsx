@@ -21,7 +21,7 @@ export default function DashboardOverview() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Supabase থেকে শুধুমাত্র কাউন্ট (Count) নিয়ে আসা হচ্ছে (ডেটা লোড না করে)
+ 
         const { count: noticeCount } = await supabase
           .from("notices")
           .select("*", { count: "exact", head: true });
@@ -55,7 +55,6 @@ export default function DashboardOverview() {
     );
   }
 
-  // স্ট্যাটিস্টিকস কার্ডের ডেটা
   const statCards = [
     {
       title: "Total Notices",
@@ -98,7 +97,6 @@ export default function DashboardOverview() {
       transition={{ duration: 0.5 }}
       className="space-y-8"
     >
-      {/* 🔹 Header Section 🔹 */}
       <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="relative z-10">
@@ -115,7 +113,6 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* 🔹 Live Statistics Grid 🔹 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (
           <motion.div
@@ -125,7 +122,6 @@ export default function DashboardOverview() {
             transition={{ delay: index * 0.1 }}
             className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300 group relative overflow-hidden"
           >
-            {/* Hover Gradient Line */}
             <div
               className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
             ></div>
@@ -146,7 +142,6 @@ export default function DashboardOverview() {
         ))}
       </div>
 
-      {/* 🔹 Quick Actions Section 🔹 */}
       <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
         <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
           ⚡ Quick Actions

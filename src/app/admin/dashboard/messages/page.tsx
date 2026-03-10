@@ -26,7 +26,6 @@ export default function ManageMessages() {
   const [messagesList, setMessagesList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Modal states for reading full message
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
 
@@ -52,7 +51,6 @@ export default function ManageMessages() {
     fetchMessages();
   }, []);
 
-  // Mark a message as read
   const markAsRead = async (id: number) => {
     try {
       const { error } = await supabase
@@ -62,13 +60,12 @@ export default function ManageMessages() {
       if (error) throw error;
 
       antMessage.success("Message marked as read!");
-      fetchMessages(); // Update the list
+      fetchMessages();
     } catch (error) {
       antMessage.error("Failed to update message status.");
     }
   };
 
-  // Delete a message
   const handleDelete = async (id: number) => {
     try {
       const { error } = await supabase.from("messages").delete().eq("id", id);
@@ -81,11 +78,10 @@ export default function ManageMessages() {
     }
   };
 
-  // View full message
   const viewMessage = (record: any) => {
     setSelectedMessage(record);
     setIsModalVisible(true);
-    // Automatically mark as read when viewed
+
     if (!record.is_read) {
       markAsRead(record.id);
     }
@@ -213,7 +209,6 @@ export default function ManageMessages() {
         />
       </div>
 
-      {/* Message Reading Modal */}
       <Modal
         title={
           <span className="text-xl font-bold text-slate-800">

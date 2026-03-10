@@ -1,4 +1,3 @@
-// Path: src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,12 +5,10 @@ import AntdRegistry from "@/lib/AntdRegistry";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// 🔹 Powerful SEO Metadata Setup 🔹
 export const metadata: Metadata = {
-  // SEO Optimized Title (57 characters)
+
   title: "MSA DIU | Official Manikganj Student Association Platform",
 
-  // SEO Optimized Description (122 characters)
   description:
     "Official platform for Manikganj Student Association at DIU. Stay connected, explore events, and join our campus community.",
 
@@ -19,7 +16,6 @@ export const metadata: Metadata = {
     google: "vBOhE-VuhIiXVbQ0jiPyPPH6Cou-K6rHEa0-1a0np0w",
   },
 
-  // Canonical URL added to fix Duplicate Content issues
   alternates: {
     canonical: "https://msa-diu-website.vercel.app",
   },
@@ -39,7 +35,6 @@ export const metadata: Metadata = {
   creator: "MSA DIU",
   publisher: "Manikganj Student Association",
 
-  // Facebook, LinkedIn, WhatsApp Link Preview (Open Graph)
   openGraph: {
     title: "MSA DIU | Official Manikganj Student Association Platform",
     description:
@@ -58,7 +53,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 
-  // Twitter / X Link Preview
   twitter: {
     card: "summary_large_image",
     title: "MSA DIU | Manikganj Student Association",
@@ -72,7 +66,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Structured Data for Google Rich Results
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -86,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        {/* Injecting Structured Data */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -94,7 +88,6 @@ export default function RootLayout({
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <AntdRegistry>
-          {/* এখানে আর কোনো Navbar থাকবে না, শুধু children থাকবে */}
           {children}
         </AntdRegistry>
       </body>

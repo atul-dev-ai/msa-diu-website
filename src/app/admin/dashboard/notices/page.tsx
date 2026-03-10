@@ -60,7 +60,6 @@ export default function ManageNotices() {
           title: values.title,
           description: values.description,
           type: values.type,
-          // এখানেই মূল কনফিউশনটা ছিল! এখন key এবং value দুইটাই ছোট হাতের 'expirydate'
           expirydate: values.expirydate.toISOString(),
           link: values.link || "#",
         },
@@ -119,7 +118,7 @@ export default function ManageNotices() {
     },
     {
       title: "Expiry Date",
-      dataIndex: "expirydate", // DataIndex ও ছোট হাতের করে দিয়েছি
+      dataIndex: "expirydate",
       key: "expirydate",
       render: (date: string) => (
         <span className="text-slate-500 text-sm">
@@ -234,7 +233,7 @@ export default function ManageNotices() {
           </Form.Item>
 
           <Form.Item
-            name="expirydate" // Name ও ছোট হাতের
+            name="expirydate"
             label={
               <span className="font-medium text-slate-700">
                 Expiry Date (When to hide from Hero Section)

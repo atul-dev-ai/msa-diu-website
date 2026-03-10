@@ -1,14 +1,14 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://msa-diu-website.vercel.app"; // আপনার আসল লিংক
+  const baseUrl = "https://msa-diu-website.vercel.app";
 
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1.0, // হোম পেজ সবচেয়ে বেশি ইম্পর্টেন্ট
+      priority: 1.0, 
     },
     {
       url: `${baseUrl}/events`,

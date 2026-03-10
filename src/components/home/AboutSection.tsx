@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
-  AimOutlined, // <-- TargetOutlined এর বদলে এটি দেওয়া হলো
+  AimOutlined,
   EyeOutlined,
   CheckCircleFilled,
   UsergroupAddOutlined,
@@ -17,12 +17,12 @@ const AboutSection = () => {
       id="about"
       className="py-24 relative bg-white overflow-hidden border-b border-slate-100"
     >
-      {/* 🔹 Background Decor 🔹 */}
+
       <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-indigo-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* 🔹 Left Side: Text Content 🔹 */}
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -52,7 +52,6 @@ const AboutSection = () => {
               home for every student from Manikganj.
             </p>
 
-            {/* Mission & Vision Cards */}
             <div className="flex flex-col sm:flex-row gap-6 mb-10">
               <div className="flex-1 bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-2xl mb-4">
@@ -83,7 +82,6 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Feature List */}
             <ul className="space-y-3">
               {[
                 "Networking and Mentorship Programs",
@@ -105,7 +103,6 @@ const AboutSection = () => {
             </ul>
           </motion.div>
 
-          {/* 🔹 Right Side: Image Composition & Stats 🔹 */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -113,7 +110,7 @@ const AboutSection = () => {
             transition={{ duration: 0.8 }}
             className="relative lg:h-[600px] flex items-center justify-center lg:justify-end"
           >
-            {/* Main Big Image */}
+
             <div className="relative w-full max-w-md aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-200/50 z-10 border-[6px] border-white">
               <Image
                 src="/backbg-2.jpg"
@@ -125,7 +122,6 @@ const AboutSection = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
             </div>
 
-            {/* Secondary Floating Image */}
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -140,7 +136,6 @@ const AboutSection = () => {
               />
             </motion.div>
 
-            {/* Floating Stat Card */}
             <motion.div
               animate={{ y: [10, -10, 10] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -157,12 +152,10 @@ const AboutSection = () => {
               </div>
             </motion.div>
 
-            {/* Dots Pattern */}
             <div className="absolute -z-10 -bottom-6 -right-6 w-48 h-48 bg-[radial-gradient(circle,#6366f1_2px,transparent_2px)] bg-[size:16px_16px] opacity-20"></div>
           </motion.div>
         </div>
 
-        {/* 🔹 Bottom Stats Row 🔹 */}
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             {

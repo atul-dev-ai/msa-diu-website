@@ -187,7 +187,6 @@ const NoticeBoard = () => {
                     </p>
                   </div>
 
-                  {/* 🔹 Read More Button (Opens Modal) 🔹 */}
                   <button
                     onClick={() => handleReadMore(notice)}
                     className="mt-auto w-full flex items-center justify-center gap-2 bg-indigo-50/50 text-indigo-600 font-bold text-sm py-3.5 rounded-xl border border-indigo-100 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all duration-300 shadow-sm group-hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] cursor-pointer"
@@ -201,18 +200,14 @@ const NoticeBoard = () => {
           )}
         </div>
       </div>
-
-      {/* 🔹 Beautiful Modal for Notice Details & Form Link 🔹 */}
       <Modal
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
         closeIcon={
           <motion.div
-            // হোভারে ঘূর্ণন এবং স্কেল অ্যানিমেশন
-            whileHover={{ rotate: 90, scale: 1.15 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            // স্টাইলিং: বৃত্তাকার, গ্লাসমরফিক এফেক্ট, এবং পজিশনিং টুইক
+            whileHover={{ rotate: 90, scale: 1.15 }} 
+            transition={{ type: "spring", stiffness: 300, damping: 15 }} 
             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 border border-white/30 shadow-md backdrop-blur-sm -translate-x-1.5 translate-y-1.5 transition-colors duration-300"
           >
             <CloseOutlined className="text-white text-base" />
@@ -233,7 +228,6 @@ const NoticeBoard = () => {
       >
         {selectedNotice && (
           <div>
-            {/* Modal Header Area */}
             <div className="bg-gradient-to-r from-indigo-600 to-cyan-600 p-8 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
 
@@ -254,7 +248,6 @@ const NoticeBoard = () => {
               </h2>
             </div>
 
-            {/* Modal Body Area */}
             <div className="p-8 bg-white">
               <h4 className="text-slate-800 font-bold text-lg mb-3">
                 Notice Details
@@ -263,7 +256,6 @@ const NoticeBoard = () => {
                 {selectedNotice.description}
               </p>
 
-              {/* Action Button for Google Form / Registration */}
               {selectedNotice.link && selectedNotice.link !== "#" ? (
                 <div className="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 text-center">
                   <p className="text-sm font-semibold text-slate-700 mb-3">

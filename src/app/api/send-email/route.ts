@@ -8,8 +8,8 @@ export async function POST(req: Request) {
     const { name, email, subject, message } = await req.json();
 
     const data = await resend.emails.send({
-      from: "MSA Admin <onboarding@resend.dev>", // Resend-এ ডোমেইন ভেরিফাই না করা পর্যন্ত এটিই রাখতে হবে
-      to: ["atul11tem@gmail.com"], // এখানে আপনাদের যেই ইমেইলে নোটিফিকেশন পেতে চান সেটি দিন
+      from: "MSA Admin <onboarding@resend.dev>", 
+      to: ["atul11tem@gmail.com"],
       subject: `New Contact Form Submission: ${subject}`,
       html: `
         <div style="font-family: sans-serif; padding: 20px; color: #333;">

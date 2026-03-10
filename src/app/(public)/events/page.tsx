@@ -31,7 +31,7 @@ export default function AllEvents() {
   useEffect(() => {
     const fetchAllEvents = async () => {
       try {
-        // এখানে কোনো .limit() দেওয়া হয়নি, তাই ডাটাবেসের সব ইভেন্ট চলে আসবে
+        
         const { data, error } = await supabase
           .from("events")
           .select("*")
@@ -58,11 +58,9 @@ export default function AllEvents() {
 
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-20 relative overflow-hidden">
-      {/* 🔹 Background Decor 🔹 */}
       <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-indigo-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Breadcrumb & Header */}
         <div className="mb-12">
           <Link
             href="/"
@@ -90,7 +88,6 @@ export default function AllEvents() {
           </motion.div>
         </div>
 
-        {/* Events Grid */}
         {events.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm">
             <PictureOutlined className="text-6xl text-slate-300 mb-4" />
@@ -117,7 +114,7 @@ export default function AllEvents() {
                   whileHover={{ y: -10 }}
                   className="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-lg shadow-slate-200/40 hover:shadow-[0_20px_40px_rgba(99,102,241,0.15)] transition-all duration-500 flex flex-col h-full group"
                 >
-                  {/* Event Cover Image */}
+
                   <div className="relative h-64 w-full overflow-hidden bg-slate-100 shrink-0">
                     {event.cover_image ? (
                       <Image
@@ -142,7 +139,6 @@ export default function AllEvents() {
                     </div>
                   </div>
 
-                  {/* Event Details */}
                   <div className="p-7 flex flex-col justify-between flex-grow">
                     <div>
                       <div className="flex items-center gap-4 text-sm text-indigo-600 mb-4 font-bold bg-indigo-50 w-fit px-3 py-1.5 rounded-lg">

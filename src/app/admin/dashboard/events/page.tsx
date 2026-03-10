@@ -34,7 +34,6 @@ export default function ManageEvents() {
   const [submitting, setSubmitting] = useState(false);
   const [form] = Form.useForm();
 
-  // ইভেন্টগুলো ডাটাবেস থেকে নিয়ে আসা
   const fetchEvents = async () => {
     setLoading(true);
     try {
@@ -57,14 +56,11 @@ export default function ManageEvents() {
     fetchEvents();
   }, []);
 
-  // নতুন ইভেন্ট অ্যাড করা
   const handleAddEvent = async (values: any) => {
     setSubmitting(true);
     try {
-      // ডেট ফরম্যাট করা (Supabase এ সেভ করার জন্য)
       const formattedDate = values.event_date.format("YYYY-MM-DD");
 
-      // গ্যালারির একাধিক লিংকে কমা (,) দিয়ে আলাদা করে Array তে রূপান্তর করা
       const galleryArray = values.gallery_images
         ? values.gallery_images
             .split(",")
@@ -88,7 +84,7 @@ export default function ManageEvents() {
       message.success("Event added successfully!");
       setIsModalVisible(false);
       form.resetFields();
-      fetchEvents(); // লিস্ট আপডেট করা
+      fetchEvents();
     } catch (error: any) {
       message.error(error.message || "Failed to add event.");
     } finally {
@@ -96,7 +92,6 @@ export default function ManageEvents() {
     }
   };
 
-  // ইভেন্ট ডিলিট করা
   const handleDelete = async (id: number) => {
     try {
       const { error } = await supabase.from("events").delete().eq("id", id);
@@ -109,7 +104,6 @@ export default function ManageEvents() {
     }
   };
 
-  // টেবিলের কলাম ডিজাইন
   const columns = [
     {
       title: "Cover",
@@ -211,7 +205,7 @@ export default function ManageEvents() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      {/* 🔹 Header Section 🔹 */}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 md:p-8 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="relative z-10">
@@ -236,7 +230,6 @@ export default function ManageEvents() {
         </Button>
       </div>
 
-      {/* 🔹 Events Table 🔹 */}
       <div className="bg-white p-4 sm:p-6 rounded-[2rem] border border-slate-100 shadow-sm">
         <Table
           columns={columns}
@@ -248,7 +241,6 @@ export default function ManageEvents() {
         />
       </div>
 
-      {/* 🔹 Add Event Modal 🔹 */}
       <Modal
         title={
           <span className="text-xl font-bold text-slate-800">

@@ -15,19 +15,17 @@ import {
 } from "@ant-design/icons";
 import { supabase } from "@/lib/supabase";
 
-
 const { TextArea } = Input;
 
 export default function ContactAdmin() {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
-  // ফর্ম সাবমিট করার রিয়েল ফাংশন
   const onFinish = async (values: any) => {
     setLoading(true);
 
     try {
-      // ১. প্রথমে ডাটাবেসে (Supabase) সেভ করা
+
       const { error: dbError } = await supabase.from("messages").insert([
         {
           name: values.name,
@@ -39,7 +37,6 @@ export default function ContactAdmin() {
 
       if (dbError) throw new Error("Failed to save in database");
 
-      // ২. এরপর Resend API দিয়ে ইমেইল পাঠানো
       const emailResponse = await fetch("/api/send-email", {
         method: "POST",
         headers: {
@@ -57,7 +54,6 @@ export default function ContactAdmin() {
         console.warn("Email API failed, but data was saved to DB.");
       }
 
-      // ৩. সাকসেস মেসেজ দেখানো
       message.success(
         "Your message has been sent successfully! Our admin will contact you soon.",
       );
@@ -72,12 +68,10 @@ export default function ContactAdmin() {
 
   return (
     <div className="min-h-screen pt-32 pb-20 relative bg-slate-50 overflow-hidden">
-      {/* 🔹 Bluish Decorative Background 🔹 */}
       <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-cyan-500/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* 🔹 Back to Home Button 🔹 */}
         <div className="mb-8">
           <Link
             href="/"
@@ -88,7 +82,6 @@ export default function ContactAdmin() {
           </Link>
         </div>
 
-        {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -122,7 +115,6 @@ export default function ContactAdmin() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-          {/* 🔹 Left Side: Contact Information 🔹 */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -204,7 +196,6 @@ export default function ContactAdmin() {
             </div>
           </motion.div>
 
-          {/* 🔹 Right Side: Contact Form 🔹 */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}

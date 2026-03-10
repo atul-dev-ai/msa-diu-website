@@ -21,7 +21,6 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      // Supabase Real Authentication
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
@@ -33,7 +32,6 @@ export default function AdminLogin() {
 
       if (data.user) {
         message.success("Login successful! Welcome Admin.");
-        // লগইন সফল হলে ড্যাশবোর্ডে পাঠিয়ে দিবে
         router.push("/admin/dashboard");
       }
     } catch (error: any) {
@@ -45,11 +43,9 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden px-4">
-      {/* 🔹 Beautiful Bluish Background Elements 🔹 */}
       <div className="absolute top-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      {/* Back to Home Button */}
       <Link
         href="/"
         className="absolute top-8 left-8 text-slate-400 hover:text-white flex items-center gap-2 transition-colors z-20"
@@ -57,7 +53,6 @@ export default function AdminLogin() {
         <ArrowLeftOutlined /> Back to Website
       </Link>
 
-      {/* Login Card */}
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -130,8 +125,7 @@ export default function AdminLogin() {
             </Form.Item>
           </Form>
         </div>
-
-        {/* Notice for non-admins */}
+        
         <p className="text-center text-slate-500 text-xs mt-6">
           This portal is strictly restricted for authorized MSA-DIU executives
           only.
