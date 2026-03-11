@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Modal } from "antd";
 import {
-  FacebookOutlined,
+  FacebookFilled,
   LinkedinOutlined,
   YoutubeOutlined,
   MailOutlined,
   PhoneOutlined,
   EnvironmentOutlined,
   HeartFilled,
+  RightOutlined,
 } from "@ant-design/icons";
 
 const Footer = () => {
@@ -34,7 +35,7 @@ const Footer = () => {
                 />
               </div>
               <span className="text-2xl font-black text-white tracking-tight">
-                MSA <span className="text-indigo-500 font-light">DIU</span>
+                MSA <span className="text-indigo-500 font-bold">DIU</span>
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
@@ -44,11 +45,10 @@ const Footer = () => {
 
             <div className="flex gap-4">
               <a
-                href="https://www.facebook.com/diumsa/"
-                target="_blank"
-                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+                href="https://www.facebook.com/diumsa/" target="_blank"
+                className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-300 hover:bg-indigo-500 hover:text-white transition-all duration-300 border border-slate-700 hover:border-indigo-400 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] hover:-translate-y-1"
               >
-                <FacebookOutlined className="text-lg" />
+                <FacebookFilled className="text-lg" />
               </a>
               <a
                 href="#"
@@ -65,103 +65,105 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* 2. Quick Links eta middle left er kaj. Ekhane mouse hover korle links 
+          gular pashe right arrow hover hoye ashbe */}
           <div>
-            <h3 className="text-white font-bold mb-6 text-lg">Quick Links</h3>
+            <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Quick Links
+            </h3>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
-                >
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full"></span>{" "}
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#events"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
-                >
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full"></span>{" "}
-                  Events
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#notice"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
-                >
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full"></span>{" "}
-                  Notice Board
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#committee"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
-                >
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full"></span>{" "}
-                  Committee
-                </Link>
-              </li>
+              {[
+                { name: "About Us", path: "#about" },
+                { name: "Notice Board", path: "#notice" },
+                { name: "Upcoming Events", path: "#events" },
+                { name: "Executive Committee", path: "#committee" },
+              ].map((item, index) => (
+                <li key={index}>
+                  <Link
+                    href={item.path}
+                    className="text-slate-400 hover:text-indigo-400 text-sm flex items-center gap-2 transition-colors group"
+                  >
+                    <RightOutlined className="text-[10px] opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Community part middle right er kaj ekhane link er opor mouse nile right arrow ho
+          hover hobe */}
           <div>
             <h3 className="text-white font-bold mb-6 text-lg">Community</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="#about"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm"
+                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
                 >
-                  About Us
+                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                  Whatsapp Group
                 </Link>
               </li>
               <li>
                 <Link
                   href="/#committee"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm"
+                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
                 >
-                  Executive Committee
+                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                  FaceBook Group
                 </Link>
               </li>
               <li>
-              
                 <button
                   onClick={() => setIsModalVisible(true)}
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm text-left w-full cursor-pointer"
+                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm text-left w-full cursor-pointer"
                 >
+                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                   Become a Member
                 </button>
               </li>
               <li>
                 <Link
                   href="/admin/login"
-                  className="text-slate-400 hover:text-indigo-400 transition-colors text-sm"
+                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
                 >
+                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                   Admin Portal
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* 4. Contact Info */}
           <div>
-            <h3 className="text-white font-bold mb-6 text-lg">Contact Us</h3>
+            <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+              Get in Touch
+            </h3>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <EnvironmentOutlined className="text-indigo-500 mt-1" />
-                <span className="text-slate-400 text-sm leading-relaxed">
-                  Daffodil Smart City, Ashulia, Dhaka, Bangladesh
+              <li className="flex items-start gap-3 text-sm text-slate-400 group cursor-pointer">
+                <div className="w-8 h-8 rounded-lg bg-slate-800/80 flex items-center justify-center border border-slate-700 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/50 group-hover:text-indigo-400 transition-all flex-shrink-0">
+                  <EnvironmentOutlined />
+                </div>
+                <span className="mt-1 group-hover:text-slate-300 transition-colors">
+                  Daffodil Smart City, Ashulia, Savar, Dhaka.
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <PhoneOutlined className="text-indigo-500" />
-                <span className="text-slate-400 text-sm">+880 1234 567890</span>
+              <li className="flex items-center gap-3 text-sm text-slate-400 group cursor-pointer">
+                <div className="w-8 h-8 rounded-lg bg-slate-800/80 flex items-center justify-center border border-slate-700 group-hover:bg-cyan-500/20 group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all flex-shrink-0">
+                  <PhoneOutlined />
+                </div>
+                <span className="group-hover:text-slate-300 transition-colors">
+                  +880 1XXX-XXXXXX
+                </span>
               </li>
-              <li className="flex items-center gap-3">
-                <MailOutlined className="text-indigo-500" />
-                <span className="text-slate-400 text-sm">
+              <li className="flex items-center gap-3 text-sm text-slate-400 group cursor-pointer">
+                <div className="w-8 h-8 rounded-lg bg-slate-800/80 flex items-center justify-center border border-slate-700 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/50 group-hover:text-indigo-400 transition-all flex-shrink-0">
+                  <MailOutlined />
+                </div>
+                <span className="group-hover:text-slate-300 transition-colors">
                   msa18official@gmail.com
                 </span>
               </li>
@@ -209,7 +211,7 @@ const Footer = () => {
         destroyOnClose
       >
         <div className="w-full h-[70vh] min-h-[500px] rounded-xl overflow-hidden mt-4">
-          <iframe 
+          <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLScX_YOUR_FORM_ID_HERE/viewform?embedded=true"
             width="100%"
             height="100%"
