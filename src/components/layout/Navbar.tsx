@@ -82,7 +82,6 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-
             <Link
               href="/"
               className="flex items-center gap-3 group z-50"
@@ -130,7 +129,15 @@ export default function Navbar() {
               })}
             </nav>
 
-            <div className="hidden md:block">
+            <div className="hidden md:flex items-center gap-3">
+              {/* Join Us Button (Primary CTA) */}
+              <Link href="/join" onClick={() => setActiveLink("/join")}>
+                <button className="bg-background cursor-pointer text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-md shadow-indigo-300 hover:-translate-y-0.5 hover:scale-105">
+                  Join Us
+                </button>
+              </Link>
+
+              {/* Contact Admin Button (Secondary) */}
               <Link href="/contact" onClick={() => setActiveLink("/contact")}>
                 <button className="bg-gradient-to-tr from-emerald-200 to-slate-400 hover:from-emerald-300 hover:to-slate-500 cursor-pointer text-black px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-sm hover:shadow-indigo-500/30 hover:-translate-y-0.5 hover:scale-105">
                   Contact Admin
@@ -182,7 +189,22 @@ export default function Navbar() {
                 );
               })}
 
-              <div className="mt-6 pt-6 border-t border-slate-100">
+              <div className="border-b-2 mt-4 mb-0"></div>
+
+              <div className="mt-2 pt-5 border-t border-slate-100 flex flex-col gap-3">
+                {/* Join Us Button (Primary CTA) */}
+                <Link
+                  href="/join"
+                  onClick={() => {
+                    setActiveLink("/join");
+                    setIsOpen(false);
+                  }}
+                >
+                  <div className="w-full bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-700 hover:to-cyan-600 text-white text-center py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-md shadow-indigo-200 cursor-pointer">
+                    Become a Member
+                  </div>
+                </Link>
+
                 <Link
                   href="/contact"
                   onClick={() => {

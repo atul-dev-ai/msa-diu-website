@@ -84,6 +84,11 @@ export default function DashboardLayout({
       label: "Manage Committee",
     },
     {
+      path: "/admin/dashboard/members",
+      icon: <UserOutlined />,
+      label: "Our Members",
+    },
+    {
       path: "/admin/dashboard/messages",
       icon: <MailOutlined />,
       label: "Inbox Messages",

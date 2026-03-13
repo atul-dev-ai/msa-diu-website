@@ -6,6 +6,8 @@ import AntdRegistry from "@/lib/AntdRegistry";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  
+  metadataBase: new URL("https://msa-diu-website.vercel.app"),
 
   title: "MSA DIU | Official Manikganj Student Association Platform",
 
