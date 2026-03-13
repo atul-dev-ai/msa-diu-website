@@ -59,8 +59,6 @@ const NoticeBoard = () => {
     setIsModalVisible(true);
   };
 
-  if (loading) return null;
-
   return (
     <section
       id="notice"
@@ -100,7 +98,29 @@ const NoticeBoard = () => {
 
         {/* Notices Container */}
         <div className="min-h-[400px]">
-          {notices.length === 0 ? (
+          {loading ? (
+            // 🔹 Premium Skeleton Loader (Fixes the Layout Shift Bug) 🔹
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((item) => (
+                <div
+                  key={item}
+                  className="bg-white/60 backdrop-blur-lg rounded-[2rem] p-7 border border-white shadow-sm h-[320px] flex flex-col justify-between animate-pulse"
+                >
+                  <div>
+                    <div className="flex justify-between items-center mb-5">
+                      <div className="w-16 h-6 bg-indigo-100/60 rounded-full"></div>
+                      <div className="w-24 h-6 bg-slate-100 rounded-md"></div>
+                    </div>
+                    <div className="w-3/4 h-7 bg-slate-200/70 rounded-md mb-4"></div>
+                    <div className="w-full h-4 bg-slate-100 rounded-md mb-2"></div>
+                    <div className="w-5/6 h-4 bg-slate-100 rounded-md mb-2"></div>
+                    <div className="w-4/6 h-4 bg-slate-100 rounded-md"></div>
+                  </div>
+                  <div className="w-full h-12 bg-indigo-50/50 rounded-xl mt-6 border border-indigo-50"></div>
+                </div>
+              ))}
+            </div>
+          ) : notices.length === 0 ? (
             // Empty State
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -206,8 +226,8 @@ const NoticeBoard = () => {
         footer={null}
         closeIcon={
           <motion.div
-            whileHover={{ rotate: 90, scale: 1.15 }} 
-            transition={{ type: "spring", stiffness: 300, damping: 15 }} 
+            whileHover={{ rotate: 90, scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 border border-white/30 shadow-md backdrop-blur-sm -translate-x-1.5 translate-y-1.5 transition-colors duration-300"
           >
             <CloseOutlined className="text-white text-base" />

@@ -180,17 +180,20 @@ export default function ContactAdmin() {
                 </h4>
                 <div className="flex gap-3">
                   <a
-                    href="https://www.facebook.com/diumsa/" target="_blank"
+                    href="https://www.facebook.com/diumsa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Facebook Community Page"
                     className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all shadow-sm border border-slate-100"
                   >
                     <FacebookFilled className="text-lg" />
                   </a>
-                  <a
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm border border-slate-100"
+                  <div
+                    title="Coming Soon"
+                    className="w-10 h-10 rounded-full bg-slate-300/50 flex items-center justify-center text-slate-500 cursor-not-allowed border border-slate-300"
                   >
                     <LinkedinFilled className="text-lg" />
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>

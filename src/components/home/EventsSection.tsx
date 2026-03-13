@@ -20,7 +20,7 @@ interface EventType {
   description: string;
   event_date: string;
   cover_image: string;
-  location?: string; 
+  location?: string;
 }
 
 const EventsSection = () => {
@@ -71,12 +71,9 @@ const EventsSection = () => {
     return () => ctx.revert();
   }, [events]);
 
-  if (loading) return null;
-
   return (
     <section id="events" ref={sectionRef} className="py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -88,9 +85,9 @@ const EventsSection = () => {
             </p>
           </div>
 
-          {events.length > 0 && (
+          {!loading && events.length > 0 && (
             <Link href="/events" className="hidden md:flex">
-              <button className="flex items-center gap-2 cursor-pointer  font-semibold ransition-colors hover:border py-2 px-5 hover:rounded-full hover:border-purple-300 hover:shadow-purple-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-110 duration-300 transition-all rounded-full">
+              <button className="flex items-center gap-2 cursor-pointer font-semibold transition-colors hover:border py-2 px-5 hover:rounded-full hover:border-purple-300 hover:shadow-purple-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-110 duration-300 transition-all rounded-full">
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text hover:from-purple-500 hover:to-pink-500 text-transparent">
                   {" "}
                   View All Events{" "}
@@ -101,7 +98,35 @@ const EventsSection = () => {
           )}
         </div>
 
-        {events.length === 0 ? (
+        {/* 🔹 Checking Loading State Here 🔹 */}
+        {loading ? (
+          // 🔹 Premium Skeleton Loader (Matches Event Cards) 🔹
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 shadow-sm flex flex-col h-[460px] animate-pulse"
+              >
+                {/* Image Placeholder */}
+                <div className="h-56 w-full bg-slate-200 shrink-0 relative">
+                  {/* Tag Placeholder */}
+                  <div className="absolute top-4 right-4 w-20 h-6 bg-slate-300 rounded-full"></div>
+                </div>
+                {/* Content Placeholder */}
+                <div className="p-6 flex flex-col justify-between flex-grow">
+                  <div>
+                    <div className="w-28 h-4 bg-slate-200 rounded-md mb-4"></div>
+                    <div className="w-full h-7 bg-slate-300 rounded-md mb-3"></div>
+                    <div className="w-3/4 h-7 bg-slate-300 rounded-md mb-5"></div>
+                    <div className="w-40 h-4 bg-slate-200 rounded-md"></div>
+                  </div>
+                  {/* Button Placeholder */}
+                  <div className="w-full h-12 bg-indigo-50 rounded-xl mt-6"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : events.length === 0 ? (
           <div className="text-center py-16 bg-slate-50 rounded-3xl border border-slate-100">
             <p className="text-slate-500 font-medium text-lg">
               No events to show at the moment.
@@ -182,7 +207,7 @@ const EventsSection = () => {
           </div>
         )}
 
-        {events.length > 0 && (
+        {!loading && events.length > 0 && (
           <div className="mt-10 text-center md:hidden">
             <Link href="/events">
               <button className="inline-flex items-center gap-2 text-indigo-600 font-semibold px-6 py-3 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors">
