@@ -10,18 +10,24 @@ import {
   DatabaseOutlined,
   PlusOutlined,
   ArrowRightOutlined,
+  UserOutlined, // 👈 এটি নতুন যুক্ত হয়েছে
 } from "@ant-design/icons";
 import { supabase } from "@/lib/supabase";
 import { Spin } from "antd";
 
 export default function DashboardOverview() {
-  const [stats, setStats] = useState({ notices: 0, events: 0, committee: 0 });
+  // 👈 members স্টেট যুক্ত করা হয়েছে
+  const [stats, setStats] = useState({
+    notices: 0,
+    events: 0,
+    committee: 0,
+    members: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
- 
         const { count: noticeCount } = await supabase
           .from("notices")
           .select("*", { count: "exact", head: true });
@@ -32,10 +38,17 @@ export default function DashboardOverview() {
           .from("committee")
           .select("*", { count: "exact", head: true });
 
+        // 👈 মেম্বার কাউন্ট নিয়ে আসার লজিক
+        const { count: memberCount } = await supabase
+          .from("members")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "approved");
+
         setStats({
           notices: noticeCount || 0,
           events: eventCount || 0,
           committee: committeeCount || 0,
+          members: memberCount || 0, // 👈 এটি যুক্ত করা হয়েছে
         });
       } catch (error) {
         console.error("Failed to fetch stats:", error);
@@ -80,6 +93,15 @@ export default function DashboardOverview() {
       bgColor: "bg-purple-50",
       textColor: "text-purple-600",
     },
+    // 👇 নতুন Approved Members কার্ড 👇
+    {
+      title: "Approved Members",
+      count: stats.members,
+      icon: <UserOutlined />,
+      color: "from-rose-500 to-pink-500",
+      bgColor: "bg-rose-50",
+      textColor: "text-rose-600",
+    },
     {
       title: "Database Status",
       count: "Active",
@@ -113,7 +135,8 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 👈 এখানে lg:grid-cols-5 করা হয়েছে যাতে ৫টি কার্ড সুন্দরভাবে বসে */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {statCards.map((stat, index) => (
           <motion.div
             key={index}
@@ -147,7 +170,8 @@ export default function DashboardOverview() {
           ⚡ Quick Actions
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* 👈 এখানে lg:grid-cols-4 করা হয়েছে যাতে ৪টি বাটন পাশাপাশি বসে */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           <Link href="/admin/dashboard/notices">
             <div className="group flex items-center justify-between bg-indigo-50/50 hover:bg-indigo-600 p-5 rounded-2xl border border-indigo-100 transition-colors duration-300 cursor-pointer">
               <div className="flex items-center gap-3">
@@ -187,6 +211,21 @@ export default function DashboardOverview() {
                 </span>
               </div>
               <ArrowRightOutlined className="text-purple-400 group-hover:text-white transition-colors group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* 👇 নতুন Manage Members বাটনটি 👇 */}
+          <Link href="/admin/dashboard/members">
+            <div className="group flex items-center justify-between bg-rose-50/50 hover:bg-rose-600 p-5 rounded-2xl border border-rose-100 transition-colors duration-300 cursor-pointer">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-rose-600 group-hover:text-rose-600 shadow-sm">
+                  <UserOutlined />
+                </div>
+                <span className="font-bold text-rose-700 group-hover:text-white transition-colors">
+                  Manage Members
+                </span>
+              </div>
+              <ArrowRightOutlined className="text-rose-400 group-hover:text-white transition-colors group-hover:translate-x-1" />
             </div>
           </Link>
         </div>
