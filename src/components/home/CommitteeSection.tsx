@@ -45,19 +45,15 @@ const CommitteeSection = () => {
     fetchCommittee();
   }, []);
 
-  if (loading) return null;
-
   return (
     <section
       id="committee"
       className="py-24 bg-slate-50 relative overflow-hidden border-b border-slate-200"
     >
-
       <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -65,7 +61,7 @@ const CommitteeSection = () => {
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 font-semibold text-sm mb-4 shadow-sm animate-bounce"
           >
-            <TeamOutlined className="animate-bounce"/> Executive Committee
+            <TeamOutlined className="animate-bounce" /> Executive Committee
           </motion.div>
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
             Meet Our{" "}
@@ -79,7 +75,32 @@ const CommitteeSection = () => {
           </p>
         </div>
 
-        {members.length === 0 ? (
+        {/* 🔹 Checking Loading State Here 🔹 */}
+        {loading ? (
+          // 🔹 Premium Skeleton Loader (Matches Member Cards) 🔹
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                key={item}
+                className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 flex flex-col items-center text-center animate-pulse"
+              >
+                {/* Circular Profile Skeleton */}
+                <div className="w-28 h-28 mb-5 rounded-full bg-slate-200 border-4 border-white shadow-sm"></div>
+                {/* Name Skeleton */}
+                <div className="w-32 h-6 bg-slate-200 rounded-md mb-3"></div>
+                {/* Designation Skeleton */}
+                <div className="w-24 h-4 bg-indigo-100 rounded-md mb-4"></div>
+                {/* Department/Batch Skeleton */}
+                <div className="w-full h-8 bg-slate-100 rounded-lg mb-6"></div>
+                {/* Social Icons Skeleton */}
+                <div className="flex gap-3 mt-auto pt-2">
+                  <div className="w-9 h-9 rounded-full bg-slate-200"></div>
+                  <div className="w-9 h-9 rounded-full bg-slate-200"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : members.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm">
             <p className="text-slate-500 font-medium text-lg">
               Committee members will be updated soon.
@@ -97,7 +118,6 @@ const CommitteeSection = () => {
                 whileHover={{ y: -10 }}
                 className="bg-white rounded-[2rem] p-6 shadow-xl shadow-indigo-100/40 border border-slate-100 hover:border-indigo-200 transition-all group flex flex-col items-center text-center relative overflow-hidden"
               >
-
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                 <div className="relative w-28 h-28 mb-5 rounded-full p-1 bg-gradient-to-tr from-indigo-500 to-cyan-400 shadow-lg shadow-indigo-200">

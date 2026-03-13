@@ -26,13 +26,10 @@ interface NoticeType {
 }
 
 const HeroSection = () => {
-  const [isClient, setIsClient] = useState(false);
   const [featuredNotice, setFeaturedNotice] = useState<NoticeType | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-
     const fetchActiveNotice = async () => {
       try {
         const currentDate = new Date().toISOString();
@@ -53,8 +50,6 @@ const HeroSection = () => {
 
     fetchActiveNotice();
   }, []);
-
-  if (!isClient) return null;
 
   return (
     <section
@@ -180,6 +175,7 @@ const HeroSection = () => {
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
+        destroyOnHidden={true} // 👈 Warning fix here
         closeIcon={
           <motion.div
             whileHover={{ rotate: 90, scale: 1.15 }}

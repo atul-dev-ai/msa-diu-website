@@ -7,7 +7,7 @@ import { Modal } from "antd";
 import {
   FacebookFilled,
   LinkedinOutlined,
-  YoutubeOutlined,
+  YoutubeFilled,
   MailOutlined,
   PhoneOutlined,
   EnvironmentOutlined,
@@ -45,23 +45,26 @@ const Footer = () => {
 
             <div className="flex gap-4">
               <a
-                href="https://www.facebook.com/diumsa/" target="_blank"
+                href="https://www.facebook.com/diumsa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Facebook Community page"
                 className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-300 hover:bg-indigo-500 hover:text-white transition-all duration-300 border border-slate-700 hover:border-indigo-400 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] hover:-translate-y-1"
               >
                 <FacebookFilled className="text-lg" />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+              <div
+                title="Coming Soon"
+                className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-500 cursor-not-allowed border border-slate-700"
               >
                 <LinkedinOutlined className="text-lg" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+              </div>
+              <div
+                title="Coming Soon"
+                className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-500 cursor-not-allowed border border-slate-700"
               >
-                <YoutubeOutlined className="text-lg" />
-              </a>
+                <YoutubeFilled className="text-lg" />
+              </div>
             </div>
           </div>
 
@@ -99,16 +102,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="#about"
-                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
-                >
-                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                  Whatsapp Group
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#committee"
+                  href="https://www.facebook.com/diumsa/" target="_blank" rel="noopener noreferrer" aria-label="Visit Community Page"
                   className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
                 >
                   <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
@@ -131,6 +125,18 @@ const Footer = () => {
                 >
                   <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                   Admin Portal
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://rokto-lagbe-as.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Blood Donor and Finder Organization"
+                  className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
+                >
+                  <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                  Become a Blood Donor
                 </Link>
               </li>
             </ul>

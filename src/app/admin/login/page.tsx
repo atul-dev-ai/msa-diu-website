@@ -57,7 +57,7 @@ export default function AdminLogin() {
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
+        className="w-full max-w-md relative z-10 mt-5"
       >
         <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-8 sm:p-10 rounded-[2.5rem] shadow-2xl shadow-indigo-900/20">
           <div className="text-center mb-10">
@@ -129,6 +129,7 @@ export default function AdminLogin() {
         <p className="text-center text-slate-500 text-xs mt-6">
           This portal is strictly restricted for authorized MSA-DIU executives
           only.
+          Welcome to the MSA DIU Admin Portal. This secure section is strictly for authorized executive committee members to manage official notices, upcoming events, and student data. If you are facing any login issues, please contact the<b> IT secretary</b>.
         </p>
       </motion.div>
     </div>
