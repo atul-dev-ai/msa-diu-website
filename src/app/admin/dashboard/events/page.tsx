@@ -24,7 +24,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import Image from "next/image";
-import imageCompression from "browser-image-compression"; // 👈 নতুন প্যাকেজটি ইম্পোর্ট করা হলো
+import imageCompression from "browser-image-compression";
 
 const { TextArea } = Input;
 
@@ -65,7 +65,7 @@ export default function ManageEvents() {
   // 🔹 Core Upload & Compression Function 🔹
   const uploadToSupabase = async (file: File) => {
     try {
-      // ১. ছবি কম্প্রেস করার সেটিংস (সাইজ কমাবে কিন্তু কোয়ালিটি ঠিক রাখবে)
+      // ১. ছবি কম্প্রেস করার সেটিংস (সাইজ কমাবে কিন্তু কোয়ালিটি ঠিক রাখবে)
       const options = {
         maxSizeMB: 0.2, // সর্বোচ্চ ২০০ KB
         maxWidthOrHeight: 1280, // স্ট্যান্ডার্ড রেজোলিউশন
@@ -100,7 +100,6 @@ export default function ManageEvents() {
       if (!file) return;
 
       const url = await uploadToSupabase(file);
-      // ফর্মের ফিল্ড অটো আপডেট করে দেবে
       form.setFieldsValue({ cover_image: url });
       message.success("Cover image optimized & uploaded!");
     } catch (err: any) {
@@ -125,7 +124,6 @@ export default function ManageEvents() {
         urls.push(url);
       }
 
-      // আগের লিংকগুলো রেখে নতুনগুলো কমা দিয়ে অ্যাড করবে
       const currentGallery = form.getFieldValue("gallery_images") || "";
       const newGallery = currentGallery
         ? `${currentGallery},\n${urls.join(",\n")}`
@@ -176,14 +174,60 @@ export default function ManageEvents() {
     }
   };
 
+  // 🔹 Storage ও Database থেকে ইভেন্ট এবং ছবি ডিলিট করার লজিক 🔹
   const handleDelete = async (id: number) => {
     try {
-      const { error } = await supabase.from("events").delete().eq("id", id);
-      if (error) throw error;
+      // ১. যে ইভেন্টটি ডিলিট হবে, স্টেট থেকে তার ডেটা খুঁজে বের করা
+      const eventToDelete = events.find((e) => e.id === id);
 
-      message.success("Event deleted successfully!");
+      if (eventToDelete) {
+        const filesToRemove: string[] = [];
+
+        // URL থেকে শুধু ছবির নামটুকু (File Name) বের করার ফাংশন
+        const getFileName = (url: string) => {
+          if (!url || !url.includes("/events/")) return null;
+          return url.split("/events/").pop();
+        };
+
+        // কভার ইমেজের নাম লিস্টে যোগ করা
+        const coverName = getFileName(eventToDelete.cover_image);
+        if (coverName) filesToRemove.push(decodeURIComponent(coverName));
+
+        // গ্যালারির ছবিগুলোর নাম লিস্টে যোগ করা
+        if (
+          eventToDelete.gallery_images &&
+          Array.isArray(eventToDelete.gallery_images)
+        ) {
+          eventToDelete.gallery_images.forEach((url: string) => {
+            const galleryName = getFileName(url);
+            if (galleryName)
+              filesToRemove.push(decodeURIComponent(galleryName));
+          });
+        }
+
+        // ২. Supabase Storage (বাকেট) থেকে ছবিগুলো ডিলিট করা
+        if (filesToRemove.length > 0) {
+          const { error: storageError } = await supabase.storage
+            .from("events")
+            .remove(filesToRemove);
+
+          if (storageError) {
+            console.error("Storage deletion error:", storageError);
+          }
+        }
+      }
+
+      // ৩. সবশেষে Database থেকে ইভেন্টের রো (Row) ডিলিট করা
+      const { error: dbError } = await supabase
+        .from("events")
+        .delete()
+        .eq("id", id);
+      if (dbError) throw dbError;
+
+      message.success("Event and images deleted successfully!");
       fetchEvents();
-    } catch (error) {
+    } catch (error: any) {
+      console.error(error);
       message.error("Failed to delete event.");
     }
   };
@@ -449,7 +493,6 @@ export default function ManageEvents() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  {/* multiple attribute added here */}
                   <input
                     type="file"
                     multiple

@@ -25,6 +25,7 @@ import {
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import imageCompression from "browser-image-compression"; 
 
 const designationOptions = [
   { value: "President" },
@@ -49,6 +50,7 @@ const designationOptions = [
   { value: "Hosting Secretary" },
   { value: "Cultural Secretary" },
   { value: "Executive Member" },
+  { value: "Lead Developer" },
 ];
 
 export default function ManageCommittee() {
@@ -91,14 +93,20 @@ export default function ManageCommittee() {
 
       if (imageUploadType === "upload" && uploadFile) {
 
-        const fileExt = uploadFile.name.split(".").pop();
+        const options = {
+          maxSizeMB: 0.1,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(uploadFile, options);
 
+        const fileExt = uploadFile.name.split(".").pop() || "jpg";
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
 
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from("committee_images")
-          .upload(fileName, uploadFile, {
-            contentType: uploadFile.type, 
+          .upload(fileName, compressedFile, {
+            contentType: compressedFile.type,
             upsert: true,
           });
 
@@ -111,9 +119,7 @@ export default function ManageCommittee() {
           .getPublicUrl(fileName);
 
         finalImageUrl = publicUrlData.publicUrl;
-      }
-
-      else if (imageUploadType === "url") {
+      } else if (imageUploadType === "url") {
         finalImageUrl = values.imageUrl || "";
       }
 
@@ -147,11 +153,32 @@ export default function ManageCommittee() {
 
   const handleDelete = async (id: number) => {
     try {
+      const memberToDelete = members.find((m) => m.id === id);
+
+      if (memberToDelete && memberToDelete.image) {
+        const urlParts = memberToDelete.image.split("/committee_images/");
+
+        if (urlParts.length > 1) {
+          const fileName = urlParts.pop();
+          if (fileName) {
+            const { error: storageError } = await supabase.storage
+              .from("committee_images")
+              .remove([decodeURIComponent(fileName)]);
+
+            if (storageError) {
+              console.error("Storage Deletion Error:", storageError);
+            }
+          }
+        }
+      }
+
       const { error } = await supabase.from("committee").delete().eq("id", id);
       if (error) throw error;
-      message.success("Member removed successfully!");
+
+      message.success("Member and image removed successfully!");
       fetchMembers();
     } catch (error: any) {
+      console.error(error);
       message.error("Failed to remove member!");
     }
   };
@@ -295,7 +322,7 @@ export default function ManageCommittee() {
             rules={[{ required: true, message: "Please enter the name" }]}
           >
             <Input
-              placeholder="e.g. Rakib Hasan"
+              placeholder="e.g. Atul Paul"
               className="rounded-lg px-4 py-2"
             />
           </Form.Item>
@@ -352,7 +379,7 @@ export default function ManageCommittee() {
               }
             >
               <Input
-                placeholder="e.g. CSE, BBA"
+                placeholder="e.g. CIS, BBA"
                 className="rounded-lg px-4 py-2"
               />
             </Form.Item>
@@ -365,7 +392,7 @@ export default function ManageCommittee() {
               }
             >
               <Input
-                placeholder="e.g. 62nd Batch"
+                placeholder="e.g. 252 Batch"
                 className="rounded-lg px-4 py-2"
               />
             </Form.Item>
@@ -377,7 +404,7 @@ export default function ManageCommittee() {
             <Radio.Group
               value={imageUploadType}
               onChange={(e) => setImageUploadType(e.target.value)}
-              className="mb-4"
+              className="mb-4 flex flex-wrap gap-2"
             >
               <Radio.Button value="url">
                 <LinkOutlined /> Use Image URL
@@ -400,7 +427,7 @@ export default function ManageCommittee() {
                   maxCount={1}
                   beforeUpload={(file) => {
                     setUploadFile(file);
-                    return false; 
+                    return false;
                   }}
                   onRemove={() => setUploadFile(null)}
                 >

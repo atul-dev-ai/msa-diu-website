@@ -234,7 +234,7 @@ export default function ContactAdmin() {
                     ]}
                   >
                     <Input
-                      placeholder="John Doe"
+                      placeholder="e.g. Atul Paul"
                       className="rounded-xl px-4 py-2.5 bg-slate-50/50 hover:bg-white focus:bg-white"
                     />
                   </Form.Item>
@@ -252,7 +252,7 @@ export default function ContactAdmin() {
                     ]}
                   >
                     <Input
-                      placeholder="john@example.com"
+                      placeholder="atul@example.com"
                       className="rounded-xl px-4 py-2.5 bg-slate-50/50 hover:bg-white focus:bg-white"
                     />
                   </Form.Item>
