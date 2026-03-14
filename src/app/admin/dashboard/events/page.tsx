@@ -65,17 +65,14 @@ export default function ManageEvents() {
   // 🔹 Core Upload & Compression Function 🔹
   const uploadToSupabase = async (file: File) => {
     try {
-      // ১. ছবি কম্প্রেস করার সেটিংস (সাইজ কমাবে কিন্তু কোয়ালিটি ঠিক রাখবে)
       const options = {
-        maxSizeMB: 0.2, // সর্বোচ্চ ২০০ KB
-        maxWidthOrHeight: 1280, // স্ট্যান্ডার্ড রেজোলিউশন
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 1280,
         useWebWorker: true,
       };
 
-      // ২. অরিজিনাল ছবিকে কম্প্রেস করা হচ্ছে
       const compressedFile = await imageCompression(file, options);
 
-      // ৩. কম্প্রেসড ছবি আপলোড করা হচ্ছে
       const fileExt = compressedFile.name.split(".").pop() || "jpg";
       const fileName = `event_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
 
@@ -177,36 +174,45 @@ export default function ManageEvents() {
   // 🔹 Storage ও Database থেকে ইভেন্ট এবং ছবি ডিলিট করার লজিক 🔹
   const handleDelete = async (id: number) => {
     try {
-      // ১. যে ইভেন্টটি ডিলিট হবে, স্টেট থেকে তার ডেটা খুঁজে বের করা
       const eventToDelete = events.find((e) => e.id === id);
 
       if (eventToDelete) {
         const filesToRemove: string[] = [];
 
-        // URL থেকে শুধু ছবির নামটুকু (File Name) বের করার ফাংশন
-        const getFileName = (url: string) => {
-          if (!url || !url.includes("/events/")) return null;
-          return url.split("/events/").pop();
+        // 🔹 একদম নিখুঁতভাবে ছবির নাম বের করার লজিক 🔹
+        const extractFileName = (url: string) => {
+          if (!url) return null;
+          try {
+            // URL থেকে ফাইলের নাম বের করবে
+            const urlObj = new URL(url);
+            const fileName = urlObj.pathname.split("/").pop();
+            return fileName ? decodeURIComponent(fileName) : null;
+          } catch (e) {
+            // যদি URL-এ কোনো সমস্যা থাকে, তখন সরাসরি শেষের অংশ নিবে
+            const fileName = url.split("/").pop();
+            return fileName ? decodeURIComponent(fileName) : null;
+          }
         };
 
-        // কভার ইমেজের নাম লিস্টে যোগ করা
-        const coverName = getFileName(eventToDelete.cover_image);
-        if (coverName) filesToRemove.push(decodeURIComponent(coverName));
+        // ১. কভার ইমেজের নাম লিস্টে যোগ করা
+        const coverName = extractFileName(eventToDelete.cover_image);
+        if (coverName) filesToRemove.push(coverName);
 
-        // গ্যালারির ছবিগুলোর নাম লিস্টে যোগ করা
+        // ২. গ্যালারির ছবিগুলোর নাম লিস্টে যোগ করা
         if (
           eventToDelete.gallery_images &&
           Array.isArray(eventToDelete.gallery_images)
         ) {
           eventToDelete.gallery_images.forEach((url: string) => {
-            const galleryName = getFileName(url);
-            if (galleryName)
-              filesToRemove.push(decodeURIComponent(galleryName));
+            const galleryName = extractFileName(url);
+            if (galleryName) filesToRemove.push(galleryName);
           });
         }
 
-        // ২. Supabase Storage (বাকেট) থেকে ছবিগুলো ডিলিট করা
+        // ৩. Supabase Storage (বাকেট) থেকে ছবিগুলো ডিলিট করা
         if (filesToRemove.length > 0) {
+          console.log("Removing files from Supabase:", filesToRemove); // ডিবাগ করার জন্য
+
           const { error: storageError } = await supabase.storage
             .from("events")
             .remove(filesToRemove);
@@ -217,11 +223,12 @@ export default function ManageEvents() {
         }
       }
 
-      // ৩. সবশেষে Database থেকে ইভেন্টের রো (Row) ডিলিট করা
+      // ৪. সবশেষে Database থেকে ইভেন্টের রো (Row) ডিলিট করা
       const { error: dbError } = await supabase
         .from("events")
         .delete()
         .eq("id", id);
+
       if (dbError) throw dbError;
 
       message.success("Event and images deleted successfully!");
