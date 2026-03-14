@@ -19,11 +19,12 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://msa-diu-website.vercel.app",
+    canonical: "/",
   },
 
   keywords: [
     "MSA DIU",
+    "MSA Association",
     "Manikganj Student Association",
     "DIU Student Association",
     "Student Association",
