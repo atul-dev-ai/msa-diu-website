@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Upcoming Events & Programs | MSA DIU",
+  title: "MSA Events & Programs | MSA DIU",
   description:
     "Stay updated with the latest events, get-togethers, and official programs of the Manikganj Student Association at DIU.",
   alternates: {

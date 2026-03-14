@@ -42,9 +42,9 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden px-4">
-      <div className="absolute top-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden px-4" suppressHydrationWarning>
+      <div className="absolute top-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none" suppressHydrationWarning></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none" suppressHydrationWarning></div>
 
       <Link
         href="/"

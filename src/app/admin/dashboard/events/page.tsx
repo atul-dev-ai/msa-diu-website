@@ -10,7 +10,6 @@ import {
   DatePicker,
   message,
   Popconfirm,
-  Space,
   Tag,
 } from "antd";
 import {
@@ -19,11 +18,13 @@ import {
   CalendarOutlined,
   EnvironmentOutlined,
   PictureOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import Image from "next/image";
+import imageCompression from "browser-image-compression"; // 👈 নতুন প্যাকেজটি ইম্পোর্ট করা হলো
 
 const { TextArea } = Input;
 
@@ -32,6 +33,11 @@ export default function ManageEvents() {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // 🔹 Upload States 🔹
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+
   const [form] = Form.useForm();
 
   const fetchEvents = async () => {
@@ -55,6 +61,84 @@ export default function ManageEvents() {
   useEffect(() => {
     fetchEvents();
   }, []);
+
+  // 🔹 Core Upload & Compression Function 🔹
+  const uploadToSupabase = async (file: File) => {
+    try {
+      // ১. ছবি কম্প্রেস করার সেটিংস (সাইজ কমাবে কিন্তু কোয়ালিটি ঠিক রাখবে)
+      const options = {
+        maxSizeMB: 0.2, // সর্বোচ্চ ২০০ KB
+        maxWidthOrHeight: 1280, // স্ট্যান্ডার্ড রেজোলিউশন
+        useWebWorker: true,
+      };
+
+      // ২. অরিজিনাল ছবিকে কম্প্রেস করা হচ্ছে
+      const compressedFile = await imageCompression(file, options);
+
+      // ৩. কম্প্রেসড ছবি আপলোড করা হচ্ছে
+      const fileExt = compressedFile.name.split(".").pop() || "jpg";
+      const fileName = `event_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+      const { error } = await supabase.storage
+        .from("events")
+        .upload(fileName, compressedFile);
+      if (error) throw error;
+
+      const { data } = supabase.storage.from("events").getPublicUrl(fileName);
+      return data.publicUrl;
+    } catch (error) {
+      console.error("Compression or Upload Error:", error);
+      throw error;
+    }
+  };
+
+  // 🔹 Handle Cover Image Upload 🔹
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploadingCover(true);
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const url = await uploadToSupabase(file);
+      // ফর্মের ফিল্ড অটো আপডেট করে দেবে
+      form.setFieldsValue({ cover_image: url });
+      message.success("Cover image optimized & uploaded!");
+    } catch (err: any) {
+      message.error("Cover upload failed: " + err.message);
+    } finally {
+      setUploadingCover(false);
+    }
+  };
+
+  // 🔹 Handle Gallery Images Upload (Multiple) 🔹
+  const handleGalleryUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    try {
+      setUploadingGallery(true);
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+
+      const urls = [];
+      for (const file of files) {
+        const url = await uploadToSupabase(file);
+        urls.push(url);
+      }
+
+      // আগের লিংকগুলো রেখে নতুনগুলো কমা দিয়ে অ্যাড করবে
+      const currentGallery = form.getFieldValue("gallery_images") || "";
+      const newGallery = currentGallery
+        ? `${currentGallery},\n${urls.join(",\n")}`
+        : urls.join(",\n");
+
+      form.setFieldsValue({ gallery_images: newGallery });
+      message.success(`${files.length} image(s) optimized & uploaded!`);
+    } catch (err: any) {
+      message.error("Gallery upload failed: " + err.message);
+    } finally {
+      setUploadingGallery(false);
+    }
+  };
 
   const handleAddEvent = async (values: any) => {
     setSubmitting(true);
@@ -205,7 +289,6 @@ export default function ManageEvents() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 md:p-8 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="relative z-10">
@@ -305,43 +388,95 @@ export default function ManageEvents() {
             </Form.Item>
           </div>
 
+          {/* 🔹 Cover Image Upload Area 🔹 */}
           <Form.Item
-            name="cover_image"
             label={
               <span className="font-semibold text-slate-700">
-                Cover Image URL (Main Display Picture)
+                Cover Image (Main Display Picture)
               </span>
             }
-            rules={[
-              { required: true, message: "Please enter cover image URL" },
-            ]}
-            extra="Paste a direct image link (e.g., from Imgur, Google Drive, or Facebook)"
+            required
+            extra="Upload from device OR paste a direct image link below"
           >
-            <Input
-              placeholder="https://example.com/image.jpg"
-              className="rounded-xl px-4 py-2.5 bg-slate-50 hover:bg-white focus:bg-white"
-            />
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverUpload}
+                    disabled={uploadingCover}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-10"
+                  />
+                  <Button
+                    icon={<UploadOutlined />}
+                    loading={uploadingCover}
+                    className="rounded-xl font-medium"
+                  >
+                    Upload Cover
+                  </Button>
+                </div>
+                <span className="text-slate-400 font-semibold text-sm">OR</span>
+              </div>
+
+              <Form.Item
+                name="cover_image"
+                noStyle
+                rules={[{ required: true, message: "Cover image is required" }]}
+              >
+                <Input
+                  placeholder="https://example.com/cover.jpg"
+                  className="rounded-xl px-4 py-2.5 bg-slate-50 hover:bg-white focus:bg-white"
+                />
+              </Form.Item>
+            </div>
           </Form.Item>
 
+          {/* 🔹 Gallery Images Upload Area 🔹 */}
           <Form.Item
-            name="gallery_images"
             label={
               <span className="font-semibold text-slate-700">
-                Gallery Image URLs (Multiple Images)
+                Gallery Images (Multiple Photos)
               </span>
             }
             extra={
-              <span className="text-indigo-500 font-medium">
-                Tip: Paste multiple image links separated by a comma (,). E.g.,
-                link1.jpg, link2.jpg
+              <span className="text-indigo-500 font-medium text-xs">
+                Tip: You can select multiple images to upload at once, or paste
+                multiple links separated by commas.
               </span>
             }
           >
-            <TextArea
-              rows={3}
-              placeholder="https://link1.jpg, https://link2.jpg, https://link3.jpg"
-              className="rounded-xl px-4 py-3 bg-slate-50 hover:bg-white focus:bg-white resize-none"
-            />
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  {/* multiple attribute added here */}
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleGalleryUpload}
+                    disabled={uploadingGallery}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-10"
+                  />
+                  <Button
+                    icon={<UploadOutlined />}
+                    loading={uploadingGallery}
+                    className="rounded-xl font-medium"
+                  >
+                    Upload Gallery Images
+                  </Button>
+                </div>
+                <span className="text-slate-400 font-semibold text-sm">OR</span>
+              </div>
+
+              <Form.Item name="gallery_images" noStyle>
+                <TextArea
+                  rows={3}
+                  placeholder="https://link1.jpg,&#10;https://link2.jpg"
+                  className="rounded-xl px-4 py-3 bg-slate-50 hover:bg-white focus:bg-white resize-none"
+                />
+              </Form.Item>
+            </div>
           </Form.Item>
 
           <Form.Item

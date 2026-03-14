@@ -64,7 +64,7 @@ export default function AllEvents() {
         <div className="mb-12">
           <Link
             href="/"
-            className="inline-flex cursor-pointer items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors font-medium mb-6 bg-white px-4 py-2 rounded-full shadow-2xl shadow-pink-300 border border-slate-200"
+            className="inline-flex cursor-pointer items-center gap-2 text-slate-500 hover:text-purple-600 transition-all duration-300 hover:-translate-y-1 hover:scale-110 font-medium mb-6 bg-white px-4 py-2 rounded-full shadow-2xl shadow-pink-300 border border-slate-200"
           >
             <HomeOutlined className="animate-bounce" /> Back to Home
           </Link>
@@ -141,12 +141,12 @@ export default function AllEvents() {
 
                   <div className="p-7 flex flex-col justify-between flex-grow">
                     <div>
-                      <div className="flex items-center gap-4 text-sm text-indigo-600 mb-4 font-bold bg-indigo-50 w-fit px-3 py-1.5 rounded-lg">
+                      <div className="flex items-center gap-4 text-sm text-purple-700 mb-4 font-bold bg-indigo-50 w-fit px-3 py-1.5 rounded-lg">
                         <CalendarOutlined />
                         {dayjs(event.event_date).format("DD MMMM, YYYY")}
                       </div>
 
-                      <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+                      <h3 className="text-2xl font-bold text-slate-800 mb-3 line-clamp-2 group-hover:text-purple-600 duration-700 transition-colors">
                         {event.title}
                       </h3>
 
@@ -164,9 +164,9 @@ export default function AllEvents() {
                       href={`/events/${event.id}`}
                       className="mt-auto block"
                     >
-                      <button className="w-full bg-slate-50 text-indigo-600 border border-slate-100 py-3.5 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition-all duration-300 flex justify-center items-center gap-2 group/btn">
+                      <button className="w-full bg-gradient-to-r from-purple-500 to-emerald-300 hover:from-purple-600 hover:to-emerald-400 border drop-shadow-xl border-slate-100 py-3.5 rounded-xl font-bold text-slate-800 hover:text-slate-600 transition-all duration-300 hover:-translate-y-1 hover:scale-105 flex justify-center items-center gap-2 group/btn cursor-pointer">
                         Explore Event{" "}
-                        <ArrowRightOutlined className="group-hover/btn:translate-x-1 transition-transform" />
+                        <ArrowRightOutlined className="group-hover/btn:translate-x-1 duration-300 transition-transform" />
                       </button>
                     </Link>
                   </div>
