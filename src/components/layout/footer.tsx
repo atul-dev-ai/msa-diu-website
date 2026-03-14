@@ -98,11 +98,17 @@ const Footer = () => {
           {/* Community part middle right er kaj ekhane link er opor mouse nile right arrow ho
           hover hobe */}
           <div>
-            <h3 className="text-white font-bold mb-6 text-lg">Community</h3>
+            <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Community
+            </h3>
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="https://www.facebook.com/diumsa/" target="_blank" rel="noopener noreferrer" aria-label="Visit Community Page"
+                  href="https://www.facebook.com/diumsa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit Community Page"
                   className="group flex items-center text-slate-400 hover:text-indigo-400 transition-colors text-sm w-fit"
                 >
                   <RightOutlined className="text-[10px] opacity-0 -ml-3 mr-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
@@ -194,7 +200,7 @@ const Footer = () => {
               <Link
                 href="https://atulpaul.vercel.app"
                 target="_blank"
-                className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-bold hover:from-indigo-300 hover:to-cyan-300 transition-all ml-1"
+                className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-bold hover:from-indigo-300 hover:to-cyan-300 transition-all ml-1 animate-bounce"
               >
                 Atul Paul
               </Link>

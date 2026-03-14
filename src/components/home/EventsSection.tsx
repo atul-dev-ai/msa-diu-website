@@ -87,12 +87,12 @@ const EventsSection = () => {
 
           {!loading && events.length > 0 && (
             <Link href="/events" className="hidden md:flex">
-              <button className="flex items-center gap-2 cursor-pointer font-semibold transition-colors hover:border py-2 px-5 hover:rounded-full hover:border-purple-300 hover:shadow-purple-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-110 duration-300 transition-all rounded-full">
+              <button className="flex items-center gap-2 cursor-pointer font-semibold hover:border py-2 px-5 hover:rounded-full hover:border-purple-300 hover:shadow-purple-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-110 duration-700 transition-all rounded-full group">
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text hover:from-purple-500 hover:to-pink-500 text-transparent">
                   {" "}
                   View All Events{" "}
                 </span>{" "}
-                <ArrowRightOutlined />
+                <ArrowRightOutlined className="group-hover:translate-x-1.5 group-hover:scale-105 transition duration-700" />
               </button>
             </Link>
           )}
@@ -194,10 +194,10 @@ const EventsSection = () => {
                     <Link href={`/events/${event.id}`} className="mt-auto">
                       <motion.button
                         whileTap={{ scale: 0.95 }}
-                        className="w-full bg-white text-indigo-600 border cursor-pointer border-indigo-200 py-3 rounded-xl font-semibold hover:bg-indigo-500 hover:text-white transition-all flex justify-center items-center gap-2 group"
+                        className="w-full bg-white text-indigo-600 border cursor-pointer border-indigo-200 py-3 rounded-xl font-semibold hover:bg-indigo-500 hover:text-white transition-all flex justify-center items-center gap-2 group duration-300 hover:-translate-y-1"
                       >
                         Details & Gallery{" "}
-                        <ArrowRightOutlined className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRightOutlined className="group-hover:translate-x-1.5 group-hover:scale-105 transition duration-300" />
                       </motion.button>
                     </Link>
                   </div>

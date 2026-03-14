@@ -86,7 +86,7 @@ export default function ContactAdmin() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100/50 border border-indigo-200 text-indigo-700 font-bold text-sm mb-4 shadow-sm"
+            className="inline-flex items-center animate-bounce gap-2 px-4 py-2 rounded-full bg-indigo-100/50 border border-indigo-200 text-indigo-700 font-bold text-sm mb-4 shadow-sm"
           >
             <MailOutlined /> Get In Touch
           </motion.div>
@@ -130,7 +130,7 @@ export default function ContactAdmin() {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-700">
                     <EnvironmentOutlined />
                   </div>
                   <div>
@@ -146,20 +146,20 @@ export default function ContactAdmin() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-700">
                     <PhoneOutlined />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">
                       Phone Number
                     </h4>
-                    <p className="text-slate-500 text-sm">+880 1234 567890</p>
-                    <p className="text-slate-500 text-sm">+880 9876 543210</p>
+                    <p className="text-slate-500 text-sm">+880 13XX XXXXXX</p>
+                    <p className="text-slate-500 text-sm">+880 98XX XXXXXX</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-700">
                     <MailOutlined />
                   </div>
                   <div>
@@ -298,9 +298,10 @@ export default function ContactAdmin() {
                     type="primary"
                     htmlType="submit"
                     loading={loading}
-                    className="bg-indigo-600 hover:bg-indigo-500 border-none h-12 px-8 rounded-xl font-bold text-base shadow-lg shadow-indigo-600/30 flex items-center gap-2"
+                    className="bg-indigo-600 hover:bg-indigo-500 border-none h-12 px-8 rounded-xl font-bold text-base shadow-lg shadow-indigo-600/30 flex items-center gap-2 hover:scale-105 hover:-translate-0.5 duration-300 transition-all group"
                   >
-                    Send Message <SendOutlined />
+                    Send Message{" "}
+                    <SendOutlined className="group-hover:translate-x-1.5 group-hover:scale-105 duration-300 transition" />
                   </Button>
                 </Form.Item>
               </Form>

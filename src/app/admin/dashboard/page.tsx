@@ -10,13 +10,13 @@ import {
   DatabaseOutlined,
   PlusOutlined,
   ArrowRightOutlined,
-  UserOutlined, // 👈 এটি নতুন যুক্ত হয়েছে
+  UserOutlined, 
 } from "@ant-design/icons";
 import { supabase } from "@/lib/supabase";
 import { Spin } from "antd";
 
 export default function DashboardOverview() {
-  // 👈 members স্টেট যুক্ত করা হয়েছে
+ 
   const [stats, setStats] = useState({
     notices: 0,
     events: 0,
@@ -37,8 +37,7 @@ export default function DashboardOverview() {
         const { count: committeeCount } = await supabase
           .from("committee")
           .select("*", { count: "exact", head: true });
-
-        // 👈 মেম্বার কাউন্ট নিয়ে আসার লজিক
+ 
         const { count: memberCount } = await supabase
           .from("members")
           .select("*", { count: "exact", head: true })
@@ -48,7 +47,7 @@ export default function DashboardOverview() {
           notices: noticeCount || 0,
           events: eventCount || 0,
           committee: committeeCount || 0,
-          members: memberCount || 0, // 👈 এটি যুক্ত করা হয়েছে
+          members: memberCount || 0,  
         });
       } catch (error) {
         console.error("Failed to fetch stats:", error);
